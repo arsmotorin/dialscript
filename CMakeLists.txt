@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 99)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_executable(dialscript main.c)
+add_executable(dialscript main/main.c
+        compiler/compiler.c
+        compiler/compiler.h)

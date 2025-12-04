@@ -1,0 +1,8 @@
+[Scene.1]
+Level: 1
+Location: Forest
+Characters: Alan, Beth
+
+[Dialog.1]
+Alan: Hello {Emotion: happy}
+Beth: Hi!
