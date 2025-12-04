@@ -42,7 +42,7 @@ choices, or other information relevant to the dialog line.
     Beth: Lorem ipsum
     Beth: Lorem ipsum {Choices: 1, 2}
     Alan: Lorem ipsum {Choice: 1}
-    Beth: Lorem ipsum {Emotion: happy}, {Choice 2}
+    Beth: Lorem ipsum {Choice 2}, {Emotion: happy}
 
 Additional dialog blocks can be defined similarly with the same
 number as in the previous example.
