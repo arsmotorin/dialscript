@@ -1,0 +1,68 @@
+DialScript dialog file example
+==============================
+
+This is an experimental dialog scripting format, so don't expect it
+to be stable and finalized.
+
+"[Scene.x]" Defines the start of a scene block. Scenes are top-level
+containers for dialog and metadata.
+Instead of "x", we need to use a unique number for each scene in the
+file.
+    [Scene.1]
+
+"Level: x" is a key-value pair that specifies the level of the scene.
+    Level: 1
+
+"Location: x" defines the location. Usually just a string, but could
+be a number (e.g. an ID).
+    Location: Forest
+
+"Characters: x" lists the characters present in the scene. This is a
+comma-separated list of character names.
+    Characters: Alan, Beth
+
+"Main dialog" here is a comment. Comments start with "//" and can be
+placed anywhere in the file. They must be ignored by the parser.
+    // Main dialog
+
+"[Dialog.x]" defines a dialog block. Each dialog block contains lines
+spoken by characters. Instead of "x", we need to use a unique number
+for each dialog block in the scene.
+    [Dialog.1]
+
+Each line in a dialog block starts with the character's name, followed
+by a ": ", and then the dialog text. Lines must include at least one
+character and some text.
+
+Optionally, lines can include metadata in
+curly braces "{}" at the end of the line. Metadata can specify emotions,
+choices, or other information relevant to the dialog line.
+
+    Alan: Lorem ipsum {Emotion: surprised}
+    Beth: Lorem ipsum
+    Beth: Lorem ipsum {Choices: 1, 2}
+    Alan: Lorem ipsum {Choice: 1}
+    Beth: Lorem ipsum {Emotion: happy}, {Choice 2}
+
+Additional dialog blocks can be defined similarly with the same
+number as in the previous example.
+
+If we want another dialog block, we can define it with a new number.
+Check the example below.
+    // Additional dialog
+    [Dialog.1]
+    Beth: Lorem ipsum
+
+    // Second additional dialog
+    [Dialog.1]
+    Beth: Lorem ipsum
+    Alan: Lorem ipsum
+
+Here is an example of a new dialog after a condition (?) is met.
+    // Activated condition, new dialog block
+    [Dialog.2]
+    Alan: Lorem ipsum
+    Alan: Lorem ipsum {Emotion: thinking}
+    Alan: Lorem ipsum
+
+TODO: add more variables and clarify additional metadata
