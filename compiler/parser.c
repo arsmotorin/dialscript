@@ -190,7 +190,11 @@ ParsedLine parse_line(const char *line) {
 
         // Check for dialog metadata
         if (meta_start) {
-            char *close = strchr(meta_start, '}');
+            // Find the last closing brace
+            char *close = NULL;
+            for (char *c = meta_start; *c; ++c) {
+                if (*c == '}') close = c;
+            }
             if (!close) {
                 pl.type = LINE_ERROR_UNCLOSED_BRACKET;
                 pl.meta = meta_start;

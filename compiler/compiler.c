@@ -10,8 +10,13 @@
 #include <string.h>
 #include <ctype.h>
 
+#define fail(msg, hint)         do { report_error_at(verbose, line_num, msg, hint, original_lines[i], 0); error++; } while(0)
+#define fail_at(msg, hint, pos) do { report_error_at(verbose, line_num, msg, hint, original_lines[i], pos); error++; } while(0)
+#define fail_final(msg, hint)   do { report_error_at(verbose, total_lines, msg, hint, NULL, 0); error++; } while(0)
+
 // Helper functions
-static void report_error_at(const int verbose, const int line, const char *msg, const char *hint, const char *line_content,
+static void report_error_at(const int verbose, const int line, const char *msg, const char *hint,
+                            const char *line_content,
                             const int pos) {
     if (verbose) verbose_error(line, msg, hint, line_content, pos);
     else brief_error(line, msg, hint, line_content, pos);
@@ -66,11 +71,6 @@ char compile(const char *filename, const int verbose) {
     char characters[1024] = {0};
 
     int has_scene = 0, has_level = 0, has_location = 0, has_chars = 0;
-
-    // Define error reporting macros
-#define fail(msg, hint)         do { report_error_at(verbose, line_num, msg, hint, original_lines[i], 0); error++; } while(0)
-#define fail_at(msg, hint, pos) do { report_error_at(verbose, line_num, msg, hint, original_lines[i], pos); error++; } while(0)
-#define fail_final(msg, hint)   do { report_error_at(verbose, total_lines, msg, hint, NULL, 0); error++; } while(0)
 
     // Parse each line
     for (int i = 0; i < total_lines; i++) {
@@ -227,17 +227,16 @@ char compile(const char *filename, const int verbose) {
     if (!has_chars)
         fail_final("Missing Characters", "add 'Characters: Name1, Name2' after [Scene.X]");
 
-// Undefine error reporting macros
-#undef fail
-#undef fail_at
-#undef fail_final
-
     // Final verbose output
     if (verbose) verbose_footer(total_lines, error);
     else brief_result(total_lines, error);
 
     // Return status
     return (char) error;
+
+#undef fail
+#undef fail_at
+#undef fail_final
 }
 
 void print_result(const char result) { (void) result; }
