@@ -19,7 +19,6 @@ set(SOURCES
         compiler/compiler.c
         compiler/parser.c
         compiler/verbose.c
-        compiler/fixer.c
 )
 
 # Headers

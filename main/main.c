@@ -16,15 +16,12 @@ int main(int const argc, char *argv[]) {
 
     // Default settings
     int mode = MODE_QUIET;
-    int fix_mode = 0;
     const char *filename = NULL;
 
     // Parse arguments
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--verbose") == 0) {
             mode = MODE_VERBOSE;
-        } else if (strcmp(argv[i], "-f") == 0 || strcmp(argv[i], "--fix") == 0) {
-            fix_mode = 1;
         } else if (argv[i][0] != '-') {
             filename = argv[i];
         }
@@ -35,11 +32,6 @@ int main(int const argc, char *argv[]) {
         printf("Error! No input file specified.\n");
         hello();
         return 1;
-    }
-
-    // Run in auto-fix mode
-    if (fix_mode) {
-        return auto_fix(filename);
     }
 
     // Compile normally
@@ -54,6 +46,5 @@ void hello(void) {
         "Usage: dialscript [options] <filename>\n"
         "Options:\n"
         "  -v, --verbose    Enable verbose mode\n"
-        "  -f, --fix        Auto-fix errors (experimental)\n"
         "To use it, please refer to the documentation.\n");
 }

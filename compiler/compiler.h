@@ -10,4 +10,3 @@
 
 char compile(const char *filename, int verbose);    // Main compile function
 void print_result(char result);                     // Print final result
-char auto_fix(const char *filename);                // Auto-fix function
