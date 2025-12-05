@@ -47,8 +47,8 @@ int main(int const argc, char *argv[]) {
 
 // Usage info
 void hello(void) {
-    printf("Hello, this is DialScript.\n"
-        "Usage: dialscript [options] <filename.ds>\n"
-        "Options:\n"
-        "  -v, --verbose    Enable verbose mode\n");
+    printf("\033[1;36mDialScript v0.0.1\033[0m\n");
+    printf("\033[1;37mUsage:\033[0m dialscript <filename.ds> [options]\n\n");
+    printf("\033[1;37mOptions:\033[0m\n");
+    printf("  \033[1;32m-v, --verbose\033[0m    Enable verbose mode\n");
 }
