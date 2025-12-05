@@ -22,9 +22,8 @@ cd dialscript
 mkdir build && cd build
 cmake ..
 cmake --build . --config Release
+copy Release\dialscript.exe C:\Windows\
 ```
-
-Binary will be in `build\Release\dialscript.exe`. Add it to PATH or copy to `C:\Windows\`.
 
 ## Syntax
 
