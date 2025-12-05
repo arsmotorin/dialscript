@@ -1,0 +1,75 @@
+# Build and release binaries when a version tag is pushed.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: linux
+            artifact: dialscript
+          - os: macos-latest
+            name: macos
+            artifact: dialscript
+          - os: windows-latest
+            name: windows
+            artifact: dialscript.exe
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Prepare artifact (Unix)
+        if: matrix.os != 'windows-latest'
+        run: |
+          mkdir -p dist
+          cp build/${{ matrix.artifact }} dist/
+          cd dist && tar -czvf dialscript-${{ matrix.name }}.tar.gz ${{ matrix.artifact }}
+
+      - name: Prepare artifact (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          mkdir dist
+          copy build\Release\${{ matrix.artifact }} dist\
+          cd dist && powershell Compress-Archive -Path ${{ matrix.artifact }} -DestinationPath dialscript-${{ matrix.name }}.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dialscript-${{ matrix.name }}
+          path: dist/dialscript-${{ matrix.name }}.*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/dialscript-linux/dialscript-linux.tar.gz
+            artifacts/dialscript-macos/dialscript-macos.tar.gz
+            artifacts/dialscript-windows/dialscript-windows.zip
+          generate_release_notes: true
+
