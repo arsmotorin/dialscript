@@ -50,11 +50,11 @@ void verbose_characters(const int line_num, const char *val) {
 }
 
 void verbose_dialog_line(const int line_num, const char *name, const char *text, const char *meta) {
-    const int name_len = (int)strlen(name);
+    const int name_len = (int) strlen(name);
     const int prefix_len = 4 + 3 + 3 + name_len + 2;
     const int meta_col = TERMINAL_WIDTH - META_MAX_WIDTH - 4;
     const int max_text_width = meta_col - prefix_len;
-    const int text_len = (int)strlen(text);
+    const int text_len = (int) strlen(text);
 
     printf("\033[90m%4d │   \033[1;37m%s:\033[0m ", line_num, name);
 
@@ -62,9 +62,9 @@ void verbose_dialog_line(const int line_num, const char *name, const char *text,
     const char *meta_remaining = meta;
     int first_line = 1;
 
-    while ((int)strlen(text_remaining) > 0 || (meta_remaining && (int)strlen(meta_remaining) > 0)) {
-        if ((int)strlen(text_remaining) > 0) {
-            const int chunk_len = (int)strlen(text_remaining);
+    while ((int) strlen(text_remaining) > 0 || (meta_remaining && (int) strlen(meta_remaining) > 0)) {
+        if ((int) strlen(text_remaining) > 0) {
+            const int chunk_len = (int) strlen(text_remaining);
             int print_len = chunk_len <= max_text_width ? chunk_len : max_text_width;
 
             if (chunk_len > max_text_width) {
@@ -86,7 +86,7 @@ void verbose_dialog_line(const int line_num, const char *name, const char *text,
 
             text_remaining += print_len;
             while (*text_remaining == ' ') text_remaining++;
-        } else if (meta_remaining && (int)strlen(meta_remaining) > 0) {
+        } else if (meta_remaining && (int) strlen(meta_remaining) > 0) {
             if (!first_line) {
                 printf("\033[90m     │   ");
                 for (int i = 0; i < name_len + 2; i++) printf(" ");
@@ -97,9 +97,9 @@ void verbose_dialog_line(const int line_num, const char *name, const char *text,
 
         printf("    ");
 
-        if (meta_remaining && (int)strlen(meta_remaining) > 0) {
+        if (meta_remaining && (int) strlen(meta_remaining) > 0) {
             const int meta_width = META_MAX_WIDTH;
-            const int m_chunk = (int)strlen(meta_remaining);
+            const int m_chunk = (int) strlen(meta_remaining);
             int m_print = m_chunk <= meta_width ? m_chunk : meta_width;
 
             if (m_chunk > meta_width) {

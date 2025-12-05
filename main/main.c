@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define VERSION "0.0.1"
+#define VERSION "0.0.2"
 
 int main(int const argc, char *argv[]) {
     if (argc < 2) {
